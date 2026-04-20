@@ -302,7 +302,7 @@ Generic polarity is auxiliary only. Primary signal is `industry-aware risk senti
 For sentence `s`, category `k`, company `c`, industry `g`:
 
 ```math
-Lex_{k}(s)=\max_{u\in U_k} match(\operatorname{lemma}(s),u)
+Lex_{k}(s)=\max_{u\in U_k} match(\mathrm{lemma}(s),u)
 ```
 
 where `U_k` contains Polish lemmas, inflected forms, synonyms, and cross-lingual equivalents.
