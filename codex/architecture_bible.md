@@ -24,21 +24,21 @@
 
 **Entity-resolution decision rule**
 
-\[
+```math
 ER(q,e)=w_{nip}N+w_{exact}X+w_{alias}A+w_{acro}C+w_{board}B+w_{ubo}U+w_{industry}I+w_{jurisdiction}J-w_{homonym}H
-\]
+```
 
 Default weights for seed resolution:
 
-\[
+```math
 (w_{nip},w_{exact},w_{alias},w_{acro},w_{board},w_{ubo},w_{industry},w_{jurisdiction},w_{homonym})=(0.45,0.20,0.10,0.05,0.06,0.04,0.04,0.06,0.20)
-\]
+```
 
 Acceptance rule:
 
-\[
+```math
 accept(e^\*) \iff ER(q,e^\*) \ge T_{accept} \land \left(ER(q,e^\*)-ER(q,e_2)\right)\ge T_{margin}
-\]
+```
 
 where `e2` is runner-up candidate. If false, case enters `AMBIGUOUS` state.
 
@@ -1534,23 +1534,23 @@ For clue `c` at depth `d`:
 - `Q(c)`: extraction quality
 - `X(c)`: noise/duplication penalty
 
-\[
+```math
 Potential\_Score(c)=\sigma\left(\beta_0+w_EE+w_KK+w_AA+w_SS+w_JJ+w_TT+w_NN+w_BB+w_QQ-w_XX\right)
-\]
+```
 
 Default weights from `InvestigationConfig.clue_ranking_weights`:
 
-\[
+```math
 \beta_0=-1.0,\;
 (w_E,w_K,w_A,w_S,w_J,w_T,w_N,w_B,w_Q,w_X)=
 (1.30,1.10,0.90,0.70,0.60,0.60,0.80,0.80,0.50,1.00)
-\]
+```
 
 Branching rule:
 
-\[
+```math
 expand(c)\iff Potential\_Score(c)\ge \theta \land depth(c)<D_{max}
-\]
+```
 
 where `θ = InvestigationConfig.threshold`.
 
@@ -1606,9 +1606,9 @@ Output JSON:
 
 Let `q` be user input or article mention and `e` a candidate company record.
 
-\[
+```math
 ER(q,e)=0.45N+0.20X+0.10A+0.05C+0.06B+0.04U+0.04I+0.06J-0.20H
-\]
+```
 
 Where:
 
@@ -1624,9 +1624,9 @@ Where:
 
 Acceptance:
 
-\[
+```math
 resolved \iff ER(q,e^\*)\ge T_{accept}\land ER(q,e^\*)-ER(q,e_2)\ge T_{margin}
-\]
+```
 
 Otherwise:
 
@@ -1639,15 +1639,15 @@ Generic polarity is auxiliary only. Primary signal is `industry-aware risk senti
 
 For sentence `s`, category `k`, company `c`, industry `g`:
 
-\[
+```math
 Lex_{k}(s)=\max_{u\in U_k} match(\operatorname{lemma}(s),u)
-\]
+```
 
 where `U_k` contains Polish lemmas, inflected forms, synonyms, and cross-lingual equivalents.
 
-\[
+```math
 Ctx_{k}(s,c)=Lex_k(s)\cdot Role(s,c)\cdot Assert(s)\cdot Hist(s)\cdot \left(1-Neg(s)\right)\cdot \left(1-Hedge(s)\right)\cdot M_{g,k}
-\]
+```
 
 Where:
 
@@ -1660,15 +1660,15 @@ Where:
 
 Article-level category risk:
 
-\[
+```math
 AR_k(a,c)=1-\prod_{s\in S_a}(1-w_k\cdot Ctx_k(s,c))
-\]
+```
 
 Article-level contextual risk sentiment:
 
-\[
+```math
 RiskSentiment(a,c)=\sigma\left(\sum_{k\in K}\gamma_k AR_k(a,c)-\sum_{m\in Mitigations}\delta_m Mit_m(a,c)\right)
-\]
+```
 
 Interpretation:
 
@@ -1683,15 +1683,15 @@ This is industry-aware because identical phrases receive different multipliers b
 
 For nodes `i,j`:
 
-\[
+```math
 Latent(i,j)=\cos(z_i,z_j)\cdot TypeCompat(i,j)\cdot ProvenanceIndep(i,j)\cdot BridgeUtility(i,j)
-\]
+```
 
 Create `LATENT_ASSOCIATION` edge iff:
 
-\[
+```math
 Latent(i,j)\ge \theta_{latent}
-\]
+```
 
 with `validation_required=true`. Latent edges are never scored as confirmed evidence until validated by at least one provenance-backed rule or external corroboration.
 
@@ -1699,23 +1699,23 @@ with `validation_required=true`. Latent edges are never scored as confirmed evid
 
 For evidence item `e` in category `k` at time `t`:
 
-\[
+```math
 Decay_e(t)=e^{-\lambda_k\cdot \Delta days(t,\tau_e)}
-\]
+```
 
 where `τ_e = event_date` if present, else `publication_date`.
 
 Independent-source boost:
 
-\[
+```math
 Indep(d)=1+\rho\left(1-e^{-n_{indep}(d)}\right)
-\]
+```
 
 Evidence contribution:
 
-\[
+```math
 \chi_e(t)=Base_k \cdot Veracity_e \cdot Conf_e \cdot ClaimState_e \cdot Role_e \cdot Industry_{g,k} \cdot Decay_e(t) \cdot Indep(d) \cdot (1+Stock_e+Sanction_e)
-\]
+```
 
 Where:
 
@@ -1730,19 +1730,19 @@ Where:
 
 Positive and mitigating evidence are separated:
 
-\[
+```math
 P_d(t)=1-\prod_{e\in E_d^+}\left(1-\min(0.99,\chi_e(t))\right)
-\]
+```
 
-\[
+```math
 M_d(t)=1-\prod_{e\in E_d^-}\left(1-\min(0.99,|\chi_e(t)|)\right)
-\]
+```
 
 Discovery severity:
 
-\[
+```math
 Severity_d(t)=clamp_{[0,1]}\left(P_d(t)-\omega_m M_d(t)-\omega_c Contradiction_d(t)\right)
-\]
+```
 
 Discovery status:
 
@@ -1752,29 +1752,29 @@ Discovery status:
 
 Company-level current reputation score via noisy-or aggregation:
 
-\[
+```math
 Reputation(t)=1-\prod_{d\in D}\left(1-Relevance_d\cdot Severity_d(t)\right)
-\]
+```
 
 Where `Relevance_d = 1.00` for direct-company discoveries, `0.75-0.92` for board/UBO/subsidiary-linked discoveries based on relation strength.
 
 Historical time series over buckets `b`:
 
-\[
+```math
 R_b = Reputation(t=b_{end})
-\]
+```
 
 Optional smoothing for visualization:
 
-\[
+```math
 \widetilde{R}_b = \rho_{ewma}R_b + (1-\rho_{ewma})\widetilde{R}_{b-1}
-\]
+```
 
 Delta:
 
-\[
+```math
 \Delta_b=\widetilde{R}_b-\widetilde{R}_{b-1}
-\]
+```
 
 Output timeline point schema:
 
@@ -1797,11 +1797,11 @@ Output timeline point schema:
 
 **Stock-correlation uplift**
 
-\[
+```math
 AR_t = R_{entity,t}-(\alpha+\beta R_{market,t})
-\]
+```
 
-\[
+```math
 Stock_e=
 \begin{cases}
 0.12 & \text{if } AR_t \le -0.12 \\
@@ -1809,11 +1809,11 @@ Stock_e=
 0.03 & \text{if } AR_t \le -0.03 \\
 0 & \text{otherwise}
 \end{cases}
-\]
+```
 
 **Sanctions uplift**
 
-\[
+```math
 Sanction_e=
 \begin{cases}
 0.20 & \text{direct entity match} \\
@@ -1821,7 +1821,7 @@ Sanction_e=
 0.08 & \text{subsidiary match} \\
 0 & \text{no match}
 \end{cases}
-\]
+```
 
 ## MCP System Prompt Architecture for `DISCOVERY_ENGINE`
 

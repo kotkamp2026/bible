@@ -53,7 +53,7 @@ This JSON controls the operational thresholds of the NLP unification module to p
 
 ## 1.4 ALGORITHMIC NLP UNIFICATION
 To correctly combine mentions, the engine first stripes Polish diacritics and maps abbreviation sets. Two potential entities, $N_A$ and $N_B$, are merged into a unified seed if:
-$$
+```math
 \max(Levenshtein(N_A.name, N_B.name), Phonetic(N_A.name, N_B.name)) > SeedConfig.fuzzy_match_thresholds.levenshtein_min 
-$$
+```
 _AND_ the resulting entities share at least one hard structural match (e.g., matching NIP, identical registry address, or overlapping board members).

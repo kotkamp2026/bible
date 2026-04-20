@@ -725,23 +725,23 @@ For clue `c` at depth `d`:
 - `Q(c)`: extraction quality
 - `X(c)`: noise/duplication penalty
 
-\[
+```math
 Potential\_Score(c)=\sigma\left(\beta_0+w_EE+w_KK+w_AA+w_SS+w_JJ+w_TT+w_NN+w_BB+w_QQ-w_XX\right)
-\]
+```
 
 Default weights from `InvestigationConfig.clue_ranking_weights`:
 
-\[
+```math
 \beta_0=-1.0,\;
 (w_E,w_K,w_A,w_S,w_J,w_T,w_N,w_B,w_Q,w_X)=
 (1.30,1.10,0.90,0.70,0.60,0.60,0.80,0.80,0.50,1.00)
-\]
+```
 
 Branching rule:
 
-\[
+```math
 expand(c)\iff Potential\_Score(c)\ge \theta \land depth(c)<D_{max}
-\]
+```
 
 where `θ = InvestigationConfig.threshold`.
 

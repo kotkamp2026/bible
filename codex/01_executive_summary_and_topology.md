@@ -28,21 +28,21 @@ Codex split of the full architecture bible sectioning executive doctrine, topolo
 
 **Entity-resolution decision rule**
 
-\[
+```math
 ER(q,e)=w_{nip}N+w_{exact}X+w_{alias}A+w_{acro}C+w_{board}B+w_{ubo}U+w_{industry}I+w_{jurisdiction}J-w_{homonym}H
-\]
+```
 
 Default weights for seed resolution:
 
-\[
+```math
 (w_{nip},w_{exact},w_{alias},w_{acro},w_{board},w_{ubo},w_{industry},w_{jurisdiction},w_{homonym})=(0.45,0.20,0.10,0.05,0.06,0.04,0.04,0.06,0.20)
-\]
+```
 
 Acceptance rule:
 
-\[
+```math
 accept(e^\*) \iff ER(q,e^\*) \ge T_{accept} \land \left(ER(q,e^\*)-ER(q,e_2)\right)\ge T_{margin}
-\]
+```
 
 where `e2` is runner-up candidate. If false, case enters `AMBIGUOUS` state.
 

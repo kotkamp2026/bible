@@ -242,9 +242,9 @@ HEURISTICS:
 ### Mathematical Formulation: Reputation Score & Temporal Decay
 The event-specific Severity Score $S_{e,t}$ at time $t$ for a localized event $e$ is calculated as:
 
-$$
+```math
 S_{e,t} = \left( M_{ind} \times V_{src} \times I_{base} \right) \cdot e^{-\lambda(t - t_0)}
-$$
+```
 
 Where:
 - $M_{ind}$: Industry sentiment multiplier from `DiscoveryConfig`
@@ -255,9 +255,9 @@ Where:
 - Rule: $S_{e,t} = \max(S_{e,t}, \text{minimum\_asymptote})$ if initially verified $> 0.5$.
 
 **Aggregate Current Reputation Score:**
-$$
+```math
 R_{current} = 1.0 - \min\left(1.0, \sum_{e \in E} S_{e,current}\right)
-$$
+```
 *(Score scales downward from 1.0 to 0.0 as severity accumulates)*
 
 **Historical Time-Series Generation:**

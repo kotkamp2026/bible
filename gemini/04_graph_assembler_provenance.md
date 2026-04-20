@@ -39,7 +39,7 @@ To solve the issue of missed mentions via pure Regex, the Graph Assembler transl
 - It generates a high-dimensional vector embedding $v_c$.
 - It queries the graph vector database for embeddings corresponding to existing `Node_Seed` structures $v_s$.
 - **Latent Edge Formulation:** If cosine similarity metrics indicate proximity:
-  $$CosineSimilarity(v_c, v_s) > 0.88$$
+  $CosineSimilarity(v_c, v_s) > 0.88$
   The Graph Assembler will instantiate an `Edge_Mentions` mapping, drawing connections when an entity is referenced implicitly.
 
 ## 3.3 STRICT PROVENANCE CONTRACT

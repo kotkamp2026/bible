@@ -186,14 +186,14 @@ This split contains graph-native evidence structures, provenance-preserving node
 
 For nodes `i,j`:
 
-\[
+```math
 Latent(i,j)=\cos(z_i,z_j)\cdot TypeCompat(i,j)\cdot ProvenanceIndep(i,j)\cdot BridgeUtility(i,j)
-\]
+```
 
 Create `LATENT_ASSOCIATION` edge iff:
 
-\[
+```math
 Latent(i,j)\ge \theta_{latent}
-\]
+```
 
 with `validation_required=true`. Latent edges are never scored as confirmed evidence until validated by at least one provenance-backed rule or external corroboration.

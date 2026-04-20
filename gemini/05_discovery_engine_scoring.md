@@ -37,9 +37,9 @@ This phase employs a massive, generalized LLM operating via Model Context Protoc
 ## 4.3 MATHEMATICAL SCORING ALGORITHMS
 ### 4.3.1 Localized Event Severity ($S_{e,t}$)
 For a given `Node_Clue` mapping to an infraction `Node_Discovery`, its temporal severity scales dynamically based on age and trust:
-$$
+```math
 S_{e,t} = \max\left( \text{minimum\_asymptote}, \left[ M_{ind} \times V_{src} \times I_{base} \right] \cdot e^{-\lambda(t - t_0)} \right)
-$$
+```
 - $M_{ind}$: Industry risk multiplier from `DiscoveryConfig` (e.g., 1.3 for Finance).
 - $V_{src}$: Trustworthiness of the URI originating the Clue ($0.2$ to $1.0$).
 - $I_{base}$: Subjective infraction severity assigned by the MCP ($0.0$ to $1.0$).
@@ -48,9 +48,9 @@ $$
 
 ### 4.3.2 Reputation Time-Series Vector ($R_{current}$)
 To output the historical trend visualization requested, aggregate $S_{e,t}$ dynamically over historical intervals (e.g., $t_{-12\text{ months}}$ to $t_0$). 
-$$
+```math
 R_{\tau} = \max\left(0.0, 1.0 - \sum_{e \in E} S_{e,\tau}\right) \quad \forall \tau \in \text{Timeline}
-$$
+```
 (Yields a visualization array trending downwards as timeline risk spikes, e.g.: `[1.0, 1.0, 0.85, 0.65, 0.60]`)
 
 ## 4.4 MCP SYSTEM PROMPT: THE SYNTHESIS INSTRUCTION

@@ -301,15 +301,15 @@ Generic polarity is auxiliary only. Primary signal is `industry-aware risk senti
 
 For sentence `s`, category `k`, company `c`, industry `g`:
 
-\[
+```math
 Lex_{k}(s)=\max_{u\in U_k} match(\operatorname{lemma}(s),u)
-\]
+```
 
 where `U_k` contains Polish lemmas, inflected forms, synonyms, and cross-lingual equivalents.
 
-\[
+```math
 Ctx_{k}(s,c)=Lex_k(s)\cdot Role(s,c)\cdot Assert(s)\cdot Hist(s)\cdot \left(1-Neg(s)\right)\cdot \left(1-Hedge(s)\right)\cdot M_{g,k}
-\]
+```
 
 Where:
 
@@ -322,15 +322,15 @@ Where:
 
 Article-level category risk:
 
-\[
+```math
 AR_k(a,c)=1-\prod_{s\in S_a}(1-w_k\cdot Ctx_k(s,c))
-\]
+```
 
 Article-level contextual risk sentiment:
 
-\[
+```math
 RiskSentiment(a,c)=\sigma\left(\sum_{k\in K}\gamma_k AR_k(a,c)-\sum_{m\in Mitigations}\delta_m Mit_m(a,c)\right)
-\]
+```
 
 Interpretation:
 
@@ -345,23 +345,23 @@ This is industry-aware because identical phrases receive different multipliers b
 
 For evidence item `e` in category `k` at time `t`:
 
-\[
+```math
 Decay_e(t)=e^{-\lambda_k\cdot \Delta days(t,\tau_e)}
-\]
+```
 
 where `τ_e = event_date` if present, else `publication_date`.
 
 Independent-source boost:
 
-\[
+```math
 Indep(d)=1+\rho\left(1-e^{-n_{indep}(d)}\right)
-\]
+```
 
 Evidence contribution:
 
-\[
+```math
 \chi_e(t)=Base_k \cdot Veracity_e \cdot Conf_e \cdot ClaimState_e \cdot Role_e \cdot Industry_{g,k} \cdot Decay_e(t) \cdot Indep(d) \cdot (1+Stock_e+Sanction_e)
-\]
+```
 
 Where:
 
@@ -376,19 +376,19 @@ Where:
 
 Positive and mitigating evidence are separated:
 
-\[
+```math
 P_d(t)=1-\prod_{e\in E_d^+}\left(1-\min(0.99,\chi_e(t))\right)
-\]
+```
 
-\[
+```math
 M_d(t)=1-\prod_{e\in E_d^-}\left(1-\min(0.99,|\chi_e(t)|)\right)
-\]
+```
 
 Discovery severity:
 
-\[
+```math
 Severity_d(t)=clamp_{[0,1]}\left(P_d(t)-\omega_m M_d(t)-\omega_c Contradiction_d(t)\right)
-\]
+```
 
 Discovery status:
 
@@ -398,29 +398,29 @@ Discovery status:
 
 Company-level current reputation score via noisy-or aggregation:
 
-\[
+```math
 Reputation(t)=1-\prod_{d\in D}\left(1-Relevance_d\cdot Severity_d(t)\right)
-\]
+```
 
 Where `Relevance_d = 1.00` for direct-company discoveries, `0.75-0.92` for board/UBO/subsidiary-linked discoveries based on relation strength.
 
 Historical time series over buckets `b`:
 
-\[
+```math
 R_b = Reputation(t=b_{end})
-\]
+```
 
 Optional smoothing for visualization:
 
-\[
+```math
 \widetilde{R}_b = \rho_{ewma}R_b + (1-\rho_{ewma})\widetilde{R}_{b-1}
-\]
+```
 
 Delta:
 
-\[
+```math
 \Delta_b=\widetilde{R}_b-\widetilde{R}_{b-1}
-\]
+```
 
 Output timeline point schema:
 
@@ -443,11 +443,11 @@ Output timeline point schema:
 
 **Stock-correlation uplift**
 
-\[
+```math
 AR_t = R_{entity,t}-(\alpha+\beta R_{market,t})
-\]
+```
 
-\[
+```math
 Stock_e=
 \begin{cases}
 0.12 & \text{if } AR_t \le -0.12 \\
@@ -455,11 +455,11 @@ Stock_e=
 0.03 & \text{if } AR_t \le -0.03 \\
 0 & \text{otherwise}
 \end{cases}
-\]
+```
 
 **Sanctions uplift**
 
-\[
+```math
 Sanction_e=
 \begin{cases}
 0.20 & \text{direct entity match} \\
@@ -467,7 +467,7 @@ Sanction_e=
 0.08 & \text{subsidiary match} \\
 0 & \text{no match}
 \end{cases}
-\]
+```
 
 ## MCP System Prompt Architecture for `DISCOVERY_ENGINE`
 

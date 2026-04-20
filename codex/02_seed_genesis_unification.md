@@ -184,9 +184,9 @@ This split contains the canonical seed entity contract, seed initialization cont
 
 Let `q` be user input or article mention and `e` a candidate company record.
 
-\[
+```math
 ER(q,e)=0.45N+0.20X+0.10A+0.05C+0.06B+0.04U+0.04I+0.06J-0.20H
-\]
+```
 
 Where:
 
@@ -202,9 +202,9 @@ Where:
 
 Acceptance:
 
-\[
+```math
 resolved \iff ER(q,e^\*)\ge T_{accept}\land ER(q,e^\*)-ER(q,e_2)\ge T_{margin}
-\]
+```
 
 Otherwise:
 
